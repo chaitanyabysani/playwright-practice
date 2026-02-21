@@ -15,6 +15,18 @@
 
 ---
 
+## 📂 Quick Navigation
+
+| Section | Description | Link |
+|---------|-------------|------|
+| 📅 Daily Practice Log | Day by day learning notes | [Jump to Section](#-daily-practice-log) |
+| 🎯 Interview Preparation | All PDF & DOC study files | [Jump to Section](#-interview-preparation-files) |
+| ⚙️ Setup Instructions | How to install and run | [Jump to Section](#️-setup-instructions) |
+| 🗺️ Roadmap | Learning phases | [Jump to Section](#️-learning-roadmap) |
+| 📊 Progress Tracker | Weekly progress | [Jump to Section](#-progress-tracker) |
+
+---
+
 ## 🗺️ Learning Roadmap
 
 | Phase | Topics | Status |
@@ -33,16 +45,21 @@
 playwright-practice/
 ├── .github/
 │   └── workflows/
-│       └── playwright.yml      # CI/CD — runs tests on every push
+│       └── playwright.yml          # CI/CD — runs tests on every push
+├── interview-prep/
+│   ├── day-01-playwright-basics.pdf
+│   ├── day-01-playwright-basics.docx
+│   ├── day-02-locators.pdf
+│   └── ...                         # Add new files here daily
 ├── tests/
-│   ├── basics/                 # Phase 1: Core Playwright tests
-│   ├── intermediate/           # Phase 2: POM & advanced features
-│   ├── api/                    # API testing with Playwright
-│   ├── ai-powered/             # AI-generated & AI-assisted tests
-│   └── mcp/                    # MCP integration experiments
-├── pages/                      # Page Object Models
-├── fixtures/                   # Custom fixtures & test data
-├── utils/                      # Helper functions
+│   ├── basics/                     # Phase 1: Core Playwright tests
+│   ├── intermediate/               # Phase 2: POM & advanced features
+│   ├── api/                        # API testing with Playwright
+│   ├── ai-powered/                 # AI-generated & AI-assisted tests
+│   └── mcp/                        # MCP integration experiments
+├── pages/                          # Page Object Models
+├── fixtures/                       # Custom fixtures & test data
+├── utils/                          # Helper functions
 ├── .gitignore
 ├── package.json
 ├── playwright.config.ts
@@ -123,6 +140,7 @@ npx playwright show-report
 - `npx playwright test --ui` opens a visual test runner — very helpful for beginners
 - `npx playwright show-report` shows a detailed HTML report after test run
 - Playwright supports Chromium, Firefox, and WebKit out of the box
+- Playwright differs from Selenium (no manual waits) and Cypress (supports multiple tabs & all browsers)
 
 **📌 Git Commands Used Today:**
 ```bash
@@ -132,59 +150,140 @@ git commit -m "feat: initial Playwright TypeScript setup"
 git push origin main
 ```
 
-**🔗 Resources Used:**
-- [Playwright Official Docs](https://playwright.dev/)
-- [Playwright VS Code Extension](https://marketplace.visualstudio.com/items?itemName=ms-playwright.playwright)
+**📖 Interview Questions Studied:**
+
+| # | Question | Difficulty | File |
+|---|----------|------------|------|
+| 1 | What is Playwright and how does it differ from Selenium/Cypress? | ⭐ Beginner | [📄 PDF](interview-prep/day-01-playwright-basics.pdf) · [📝 DOC](interview-prep/day-01-playwright-basics.docx) |
 
 ---
 
-<!-- 
-TEMPLATE — Copy and paste this block for each new day:
+<!--
+╔══════════════════════════════════════════════════════════════╗
+║         DAILY LOG TEMPLATE — Copy & paste for each day       ║
+╚══════════════════════════════════════════════════════════════╝
 
 ### ✅ Day X — DATE
 
 **🎯 Topics Covered:**
-- 
+-
 
 **🛠️ What I Did:**
-- 
+-
 
 **📂 Files Created / Modified:**
-- 
+-
 
 **💡 Key Learnings:**
-- 
+-
 
 **📌 Git Commands Used:**
 ```bash
-
+git pull origin main
+git add interview-prep/
+git add README.md
+git commit -m "docs: add Day X topic interview prep"
+git push origin main
 ```
 
+**📖 Interview Questions Studied:**
+| # | Question | Difficulty | File |
+|---|----------|------------|------|
+| 1 | Question here | ⭐ Beginner | [📄 PDF](interview-prep/day-XX-topic.pdf) · [📝 DOC](interview-prep/day-XX-topic.docx) |
+
 **❓ Doubts / Questions for Next Day:**
-- 
+-
 
 -->
 
 ---
 
+## 🎯 Interview Preparation Files
+
+> 📌 All study materials are stored in the `interview-prep/` folder.
+> New files are added every day. Click the links below to open them directly.
+
+---
+
+### 📊 Topic Coverage Status
+
+| Topic | Status |
+|-------|--------|
+| Playwright Basics | ✅ Done |
+| Locators & Selectors | ⏳ Upcoming |
+| Assertions | ⏳ Upcoming |
+| Page Object Model | ⏳ Upcoming |
+| Fixtures | ⏳ Upcoming |
+| API Testing | ⏳ Upcoming |
+| Network Interception | ⏳ Upcoming |
+| CI/CD with GitHub Actions | ⏳ Upcoming |
+| Advanced Playwright | ⏳ Upcoming |
+| MCP & AI Integration | ⏳ Upcoming |
+
+---
+
+### 📁 All Interview Prep Files
+
+| Day | Topic | Difficulty | Files | Date Added |
+|-----|-------|------------|-------|------------|
+| Day 1 | Playwright Basics — What is Playwright, vs Selenium vs Cypress | ⭐ Beginner | [📄 PDF](interview-prep/day-01-playwright-basics.pdf) · [📝 DOC](interview-prep/day-01-playwright-basics.docx) | Feb 21, 2026 |
+| Day 2 | _(Add tomorrow's topic here)_ | | | |
+| Day 3 | | | | |
+| Day 4 | | | | |
+| Day 5 | | | | |
+
+> 💡 **Difficulty Key:** ⭐ Beginner &nbsp;·&nbsp; ⭐⭐ Intermediate &nbsp;·&nbsp; ⭐⭐⭐ Advanced
+
+---
+
+### 🧠 Master Interview Question List
+
+| # | Question | Topic | Difficulty | Studied |
+|---|----------|-------|------------|---------|
+| 1 | What is Playwright and how does it differ from Selenium/Cypress? | Basics | ⭐ | ✅ Day 1 |
+| 2 | What are locators in Playwright? What types are available? | Locators | ⭐ | ⏳ |
+| 3 | What is auto-waiting in Playwright? | Basics | ⭐ | ⏳ |
+| 4 | What is the difference between `getByRole` and `getByText`? | Locators | ⭐ | ⏳ |
+| 5 | What are assertions in Playwright? Difference between hard and soft assertions? | Assertions | ⭐⭐ | ⏳ |
+| 6 | What is Page Object Model (POM) and why do we use it? | POM | ⭐⭐ | ⏳ |
+| 7 | How do you implement POM in Playwright with TypeScript? | POM | ⭐⭐ | ⏳ |
+| 8 | What are fixtures in Playwright? How do you create custom fixtures? | Fixtures | ⭐⭐ | ⏳ |
+| 9 | How do you do API testing in Playwright? | API Testing | ⭐⭐ | ⏳ |
+| 10 | How do you mock API responses in Playwright? | Network | ⭐⭐ | ⏳ |
+| 11 | How do you handle multiple tabs and windows in Playwright? | Advanced | ⭐⭐ | ⏳ |
+| 12 | How do you handle iFrames in Playwright? | Advanced | ⭐⭐ | ⏳ |
+| 13 | What is the difference between `page.waitForSelector` and auto-wait? | Advanced | ⭐⭐ | ⏳ |
+| 14 | How do you set up CI/CD for Playwright with GitHub Actions? | CI/CD | ⭐⭐⭐ | ⏳ |
+| 15 | How do you run Playwright tests in parallel? | Advanced | ⭐⭐⭐ | ⏳ |
+| 16 | What is visual testing in Playwright? | Advanced | ⭐⭐⭐ | ⏳ |
+| 17 | How do you handle authentication in Playwright tests? | Advanced | ⭐⭐⭐ | ⏳ |
+| 18 | What is MCP (Model Context Protocol)? | MCP & AI | ⭐⭐⭐ | ⏳ |
+| 19 | How can AI be used to generate test cases? | MCP & AI | ⭐⭐⭐ | ⏳ |
+| 20 | How do you debug failing tests in Playwright? | Advanced | ⭐⭐ | ⏳ |
+
+---
+
 ## 📌 Daily Git Commit Routine
 
-Every day, follow these steps after your practice:
+Every day after your practice, follow these steps:
 
 ```bash
-# Step 1: Pull latest changes (always do this first!)
+# Step 1: Pull latest (always do this first!)
 git pull origin main
 
-# Step 2: Check what you changed
+# Step 2: Drop your PDF/DOC into interview-prep/ folder, then stage it
+git add interview-prep/
+
+# Step 3: Stage README updates
+git add README.md
+
+# Step 4: Check what you are committing
 git status
 
-# Step 3: Stage all changes
-git add .
+# Step 5: Commit with a meaningful message
+git commit -m "docs: add Day 2 locators interview prep PDF"
 
-# Step 4: Commit with a meaningful message
-git commit -m "feat: add login page test with POM"
-
-# Step 5: Push to GitHub
+# Step 6: Push to GitHub
 git push origin main
 ```
 
@@ -196,7 +295,7 @@ git push origin main
 | `fix:` | Fix broken test or locator | `fix: update broken login button locator` |
 | `refactor:` | Restructure without changing behavior | `refactor: move selectors to page object` |
 | `chore:` | Config, dependencies, setup | `chore: update playwright config timeout` |
-| `docs:` | README or comments update | `docs: add Day 2 notes to README` |
+| `docs:` | README or interview prep files | `docs: add Day 2 locators PDF` |
 | `test:` | Add or update test data/fixtures | `test: add test data for checkout flow` |
 
 ---
@@ -207,24 +306,22 @@ Every time you push code to the `main` branch, GitHub Actions automatically:
 1. Installs Node.js and dependencies
 2. Installs Playwright browsers
 3. Runs all tests
-4. Uploads HTML report as an artifact
+4. Uploads the HTML report as a downloadable artifact
 
-You can see the results under the **Actions** tab in your GitHub repo.
+Check results under the **Actions** tab in your GitHub repo.
 
 ---
 
-## 🧠 Interview Preparation Topics
+## 📊 Progress Tracker
 
-- [ ] What is Playwright and how does it differ from Selenium/Cypress?
-- [ ] What is Page Object Model (POM) and why use it?
-- [ ] How do you handle dynamic elements in Playwright?
-- [ ] What are fixtures in Playwright?
-- [ ] How do you do API testing with Playwright?
-- [ ] How does CI/CD work with Playwright and GitHub Actions?
-- [ ] What is visual testing and how to do it in Playwright?
-- [ ] How to handle authentication in Playwright tests?
-- [ ] What is MCP (Model Context Protocol)?
-- [ ] How can AI be used to generate or improve test cases?
+| Week | Focus | Tests Written | Interview Files | Commits |
+|------|-------|:------------:|:--------------:|:-------:|
+| Week 1 | Setup + Basics | 0 | 1 | 1 |
+| Week 2 | Locators + Assertions | - | - | - |
+| Week 3 | POM + Fixtures | - | - | - |
+| Week 4 | API Testing | - | - | - |
+| Week 5 | CI/CD | - | - | - |
+| Week 6 | MCP + AI | - | - | - |
 
 ---
 
@@ -232,24 +329,11 @@ You can see the results under the **Actions** tab in your GitHub repo.
 
 | Resource | Link |
 |----------|------|
-| Playwright Docs | https://playwright.dev/ |
+| Playwright Official Docs | https://playwright.dev/ |
 | Playwright GitHub | https://github.com/microsoft/playwright |
 | TypeScript Handbook | https://www.typescriptlang.org/docs/ |
 | GitHub Actions Docs | https://docs.github.com/en/actions |
 | Playwright MCP | https://github.com/microsoft/playwright-mcp |
-
----
-
-## 📊 Progress Tracker
-
-| Week | Focus | Tests Written | Commits |
-|------|-------|--------------|---------|
-| Week 1 | Setup + Basics | 0 | 1 |
-| Week 2 | Locators + Assertions | - | - |
-| Week 3 | POM + Fixtures | - | - |
-| Week 4 | API Testing | - | - |
-| Week 5 | CI/CD | - | - |
-| Week 6 | MCP + AI | - | - |
 
 ---
 
