@@ -1,0 +1,6 @@
+
+      Environment : QA
+      Base URL    : https://practicetestautomation.com
+      Browser     : Chromium
+      Date        : Sun Feb 22 2026
+    

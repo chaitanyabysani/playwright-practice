@@ -1,0 +1,5 @@
+
+      Test Name   : Empty credentials login
+      Status      : passed
+      Duration    : 4013 ms
+    
