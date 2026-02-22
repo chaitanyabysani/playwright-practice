@@ -19,10 +19,9 @@ export default defineConfig({
   use: {
     
     browserName: 'chromium',
-    headless: false,
+    headless: true,
     screenshot: 'on',
     video: 'on',
-    channel: 'chrome',
     trace: 'on',
   },
 
