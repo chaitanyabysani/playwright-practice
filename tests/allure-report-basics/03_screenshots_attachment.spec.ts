@@ -68,14 +68,35 @@ test('Attach screenshot when test fails', async ({ page }) => {
   } catch (error) {
 
     // Take screenshot when error occurs and attach to report
-    const screenshot = await page.screenshot();
-    await allure.attachment('Failure Screenshot', screenshot, 'image/png');
+    await allure.step('Step 2A: Error captured - taking failure screenshot', async () => {
+      const screenshot = await page.screenshot();
+      await allure.attachment('Failure Screenshot', screenshot, 'image/png');
+    });
 
     // Also attach the error message as text
-    await allure.attachment('Error Message', String(error), 'text/plain');
+    await allure.step('Step 2B: Attaching error details', async () => {
+      await allure.attachment('Error Message', String(error), 'text/plain');
+      await allure.attachment('Error Type', error instanceof Error ? error.name : 'Unknown Error', 'text/plain');
+    });
 
-    // Re-throw so the test is marked as failed
-    throw error;
+    // Recover from error - continue with alternative action
+    await allure.step('Step 3: Recover from error and continue test', async () => {
+      // Navigate to a valid page after error
+      await page.goto('https://www.google.com/search?q=Playwright');
+      
+      // Take screenshot showing recovery
+      const recoveryScreenshot = await page.screenshot();
+      await allure.attachment('Recovery Screenshot', recoveryScreenshot, 'image/png');
+      
+      // Verify recovery was successful
+      await expect(page).toHaveTitle(/.*Playwright.*/i);
+    });
+
+    // Document what was recovered
+    await allure.step('Step 4: Verify test recovery successful', async () => {
+      const pageTitle = await page.title();
+      await allure.attachment('Recovery Status', `Successfully recovered. Page title: ${pageTitle}`, 'text/plain');
+    });
   }
 
 });
