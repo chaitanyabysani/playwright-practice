@@ -18,6 +18,7 @@ export default defineConfig({
   
   use: {
     
+    baseURL: 'https://demoqa.com',
     browserName: 'chromium',
     headless: true,
     screenshot: 'on',
