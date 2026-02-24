@@ -10,32 +10,19 @@
 |-------|---------|
 | 🎯 Goal | Master Playwright for QA automation interviews |
 | 🛠️ Stack | Playwright + TypeScript + GitHub Actions |
-| 📅 Start Date | February 2026 |
 | 📈 Level | Beginner → Interview Ready |
-
----
-
-## 📂 Quick Navigation
-
-| Section | Description | Link |
-|---------|-------------|------|
-| 📅 Daily Practice Log | Day by day learning notes | [Jump to Section](#-daily-practice-log) |
-| 🎯 Interview Preparation | All PDF & DOC study files | [Jump to Section](#-interview-preparation-files) |
-| ⚙️ Setup Instructions | How to install and run | [Jump to Section](#️-setup-instructions) |
-| 🗺️ Roadmap | Learning phases | [Jump to Section](#️-learning-roadmap) |
-| 📊 Progress Tracker | Weekly progress | [Jump to Section](#-progress-tracker) |
 
 ---
 
 ## 🗺️ Learning Roadmap
 
-| Phase | Topics | Status |
-|-------|--------|--------|
-| Phase 1 | Playwright Basics — locators, clicks, assertions, forms | 🔄 In Progress |
-| Phase 2 | Page Object Model (POM), fixtures, API testing | ⏳ Upcoming |
-| Phase 3 | CI/CD with GitHub Actions | ⏳ Upcoming |
-| Phase 4 | MCP (Model Context Protocol) Integration | ⏳ Upcoming |
-| Phase 5 | AI Integration — Claude API for test generation | ⏳ Upcoming |
+| Phase | Topics |
+|-------|--------|
+| Phase 1 | Playwright Basics — locators, clicks, assertions, forms 
+| Phase 2 | Page Object Model (POM), fixtures, API testing 
+| Phase 3 | CI/CD with GitHub Actions 
+| Phase 4 | MCP (Model Context Protocol) Integration 
+| Phase 5 | AI Integration — Claude API for test generation
 
 ---
 
@@ -150,11 +137,6 @@ git commit -m "feat: initial Playwright TypeScript setup"
 git push origin main
 ```
 
-**📖 Interview Questions Studied:**
-
-| # | Question | Difficulty | File |
-|---|----------|------------|------|
-| 1 | What is Playwright and how does it differ from Selenium/Cypress? | ⭐ Beginner | [📄 PDF](interview-prep/day-01-playwright-basics.pdf) · [📝 DOC](interview-prep/day-01-playwright-basics.docx) |
 
 ---
 
@@ -223,25 +205,22 @@ git add README.md
 git commit -m "docs: add Day 2 Allure Reports practice scripts and interview prep"
 git push origin main
 ```
+### ✅ Day 3 — February 23, 2026
 
-**📖 Interview Questions Studied:**
+**🎯 Topics Covered:**
+- Page Objects — creating reusable page classes to encapsulate locators and actions
+- Page Object Model (POM) — structuring tests with page objects for better maintainability
+- Page Object Manager — centralizing page object instances for easy access in tests
 
-| # | Question | Difficulty | File |
-|---|----------|------------|------|
-| 1 | What is Allure Report? | ⭐ Beginner | [📝 DOC](interview-prep/day-02-allure-reports.docx) |
-| 2 | Why do we use Allure Reports in Playwright? | ⭐ Beginner | [📝 DOC](interview-prep/day-02-allure-reports.docx) |
-| 3 | What are the different status types in Allure? | ⭐ Beginner | [📝 DOC](interview-prep/day-02-allure-reports.docx) |
-| 4 | What is the difference between Failed and Broken in Allure? | ⭐ Beginner | [📝 DOC](interview-prep/day-02-allure-reports.docx) |
-| 5 | What commands do you use for Allure Reports? | ⭐ Beginner | [📝 DOC](interview-prep/day-02-allure-reports.docx) |
-| 6 | What does --clean mean in the allure generate command? | ⭐ Beginner | [📝 DOC](interview-prep/day-02-allure-reports.docx) |
-| 7 | What prerequisite is needed to use Allure? | ⭐ Beginner | [📝 DOC](interview-prep/day-02-allure-reports.docx) |
-| 8 | How do you configure Allure in playwright.config.ts? | ⭐⭐ Intermediate | [📝 DOC](interview-prep/day-02-allure-reports.docx) |
-| 9 | How do you add steps in Allure Report? | ⭐⭐ Intermediate | [📝 DOC](interview-prep/day-02-allure-reports.docx) |
-| 10 | What are Allure Severities? | ⭐⭐ Intermediate | [📝 DOC](interview-prep/day-02-allure-reports.docx) |
-| 11 | How do you categorize tests using Epic, Feature, Story? | ⭐⭐ Intermediate | [📝 DOC](interview-prep/day-02-allure-reports.docx) |
-| 12 | How do you add Allure to a CI/CD pipeline? | ⭐⭐ Intermediate | [📝 DOC](interview-prep/day-02-allure-reports.docx) |
+**🛠️ What I Did:**
+- Created `pageobjects/` folder and added `HomePage.ts`, `ElementsPage.ts` and `PageObjectManager.ts` as examples
+- baseURL is set in `playwright.config.ts` to avoid hardcoding URLs in tests
 
----
+**📂 Files Created:**
+- `pageobjects/HomePage.ts`
+- `pageobjects/ElementsPage.ts`
+- `pageobjects/PageObjectManager.ts`
+
 
 <!--
 ╔══════════════════════════════════════════════════════════════╗
@@ -280,82 +259,6 @@ git push origin main
 -
 
 -->
-
----
-
-## 🎯 Interview Preparation Files
-
-> 📌 All study materials are stored in the `interview-prep/` folder.
-> New files are added every day. Click the links below to open them directly.
-
----
-
-### 📊 Topic Coverage Status
-
-| Topic | Status |
-|-------|--------|
-| Playwright Basics | ✅ Done |
-| Allure Reports | ✅ Done |
-| Locators & Selectors | ⏳ Upcoming |
-| Assertions | ⏳ Upcoming |
-| Page Object Model | ⏳ Upcoming |
-| Fixtures | ⏳ Upcoming |
-| API Testing | ⏳ Upcoming |
-| Network Interception | ⏳ Upcoming |
-| CI/CD with GitHub Actions | ⏳ Upcoming |
-| Advanced Playwright | ⏳ Upcoming |
-| MCP & AI Integration | ⏳ Upcoming |
-
----
-
-### 📁 All Interview Prep Files
-
-| Day | Topic | Difficulty | Files | Date Added |
-|-----|-------|------------|-------|------------|
-| Day 1 | Playwright Basics — What is Playwright, vs Selenium vs Cypress | ⭐ Beginner | [📄 PDF](interview-prep/day-01-playwright-basics.pdf) · [📝 DOC](interview-prep/day-01-playwright-basics.docx) | Feb 21, 2026 |
-| Day 2 | Allure Reports — Setup, Features, Steps, Screenshots, Parameters, Links | ⭐ Beginner · ⭐⭐ Intermediate | [📝 DOC](interview-prep/day-02-allure-reports.docx) | Feb 22, 2026 |
-| Day 3 | | | | |
-| Day 4 | | | | |
-| Day 5 | | | | |
-
-> 💡 **Difficulty Key:** ⭐ Beginner &nbsp;·&nbsp; ⭐⭐ Intermediate &nbsp;·&nbsp; ⭐⭐⭐ Advanced
-
----
-
-### 🧠 Master Interview Question List
-
-| # | Question | Topic | Difficulty | Studied |
-|---|----------|-------|------------|---------|
-| 1 | What is Playwright and how does it differ from Selenium/Cypress? | Basics | ⭐ | ✅ Day 1 |
-| 2 | What is Allure Report and why do we use it? | Allure Reports | ⭐ | ✅ Day 2 |
-| 3 | What are the different status types in Allure? | Allure Reports | ⭐ | ✅ Day 2 |
-| 4 | What is the difference between Failed and Broken in Allure? | Allure Reports | ⭐ | ✅ Day 2 |
-| 5 | What commands do you use for Allure Reports? | Allure Reports | ⭐ | ✅ Day 2 |
-| 6 | How do you configure Allure in playwright.config.ts? | Allure Reports | ⭐⭐ | ✅ Day 2 |
-| 7 | How do you add steps in Allure Report? | Allure Reports | ⭐⭐ | ✅ Day 2 |
-| 8 | How do you categorize tests using Epic, Feature, Story? | Allure Reports | ⭐⭐ | ✅ Day 2 |
-| 9 | How do you add Allure to a CI/CD pipeline? | Allure Reports | ⭐⭐ | ✅ Day 2 |
-| 10 | What are locators in Playwright? What types are available? | Locators | ⭐ | ⏳ |
-| 11 | What is auto-waiting in Playwright? | Basics | ⭐ | ⏳ |
-| 12 | What is the difference between `getByRole` and `getByText`? | Locators | ⭐ | ⏳ |
-| 13 | What are assertions in Playwright? Difference between hard and soft assertions? | Assertions | ⭐⭐ | ⏳ |
-| 14 | What is Page Object Model (POM) and why do we use it? | POM | ⭐⭐ | ⏳ |
-| 15 | How do you implement POM in Playwright with TypeScript? | POM | ⭐⭐ | ⏳ |
-| 16 | What are fixtures in Playwright? How do you create custom fixtures? | Fixtures | ⭐⭐ | ⏳ |
-| 17 | How do you do API testing in Playwright? | API Testing | ⭐⭐ | ⏳ |
-| 18 | How do you mock API responses in Playwright? | Network | ⭐⭐ | ⏳ |
-| 19 | How do you handle multiple tabs and windows in Playwright? | Advanced | ⭐⭐ | ⏳ |
-| 20 | How do you handle iFrames in Playwright? | Advanced | ⭐⭐ | ⏳ |
-| 21 | What is the difference between `page.waitForSelector` and auto-wait? | Advanced | ⭐⭐ | ⏳ |
-| 22 | How do you set up CI/CD for Playwright with GitHub Actions? | CI/CD | ⭐⭐⭐ | ⏳ |
-| 23 | How do you run Playwright tests in parallel? | Advanced | ⭐⭐⭐ | ⏳ |
-| 24 | What is visual testing in Playwright? | Advanced | ⭐⭐⭐ | ⏳ |
-| 25 | How do you handle authentication in Playwright tests? | Advanced | ⭐⭐⭐ | ⏳ |
-| 26 | What is MCP (Model Context Protocol)? | MCP & AI | ⭐⭐⭐ | ⏳ |
-| 27 | How can AI be used to generate test cases? | MCP & AI | ⭐⭐⭐ | ⏳ |
-| 28 | How do you debug failing tests in Playwright? | Advanced | ⭐⭐ | ⏳ |
-
----
 
 ## 📌 Daily Git Commit Routine
 
@@ -406,19 +309,6 @@ Check results under the **Actions** tab in your GitHub repo.
 
 ---
 
-## 📊 Progress Tracker
-
-| Week | Focus | Tests Written | Interview Files | Commits |
-|------|-------|:------------:|:--------------:|:-------:|
-| Week 1 | Setup + Basics + Allure Reports | 9 | 2 | 2 |
-| Week 2 | Locators + Assertions | - | - | - |
-| Week 3 | POM + Fixtures | - | - | - |
-| Week 4 | API Testing | - | - | - |
-| Week 5 | CI/CD | - | - | - |
-| Week 6 | MCP + AI | - | - | - |
-
----
-
 ## 📚 Useful Resources
 
 | Resource | Link |
@@ -430,5 +320,3 @@ Check results under the **Actions** tab in your GitHub repo.
 | Playwright MCP | https://github.com/microsoft/playwright-mcp |
 
 ---
-
-*Last updated: February 22, 2026*
