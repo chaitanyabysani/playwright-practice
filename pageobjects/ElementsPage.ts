@@ -26,5 +26,53 @@ export class ElementsPage {
         this.uploadAndDownload = page.getByText('Upload and Download');
         this.dynamicProperties = page.getByText('Dynamic Properties');
     }
-    
+
+    async verifyElementsPage() {
+        await expect(this.elementsHeader).toBeVisible();
+    }
+
+    async navigateToTextBox() {
+        await this.textBox.click();
+        await expect(this.page).toHaveURL(/.*text-box/);
+    }
+
+    async navigateToCheckBox() {
+        await this.checkBox.click();
+        await expect(this.page).toHaveURL(/.*check-box/);
+    }
+
+    async navigateToRadioButton() {
+        await this.radioButton.click();
+        await expect(this.page).toHaveURL(/.*radio-button/);
+    }  
+
+    async navigateToWebTables() {
+        await this.webTables.click();
+        await expect(this.page).toHaveURL(/.*webtables/);
+    }
+
+    async navigateToButtons() {
+        await this.buttons.click();
+        await expect(this.page).toHaveURL(/.*buttons/);
+    }   
+
+    async navigateToLinks() {
+        await this.links.click();
+        await expect(this.page).toHaveURL(/.*links/);
+    }
+
+    async navigateToBrokenLinksImages() {
+        await this.brokenLinksImages.click();
+        await expect(this.page).toHaveURL(/.*broken/);
+    }
+
+    async navigateToUploadAndDownload() {
+        await this.uploadAndDownload.click();
+        await expect(this.page).toHaveURL(/.*upload-download/);
+    }
+
+    async navigateToDynamicProperties() {
+        await this.dynamicProperties.click();
+        await expect(this.page).toHaveURL(/.*dynamic-properties/);
+    }
 }

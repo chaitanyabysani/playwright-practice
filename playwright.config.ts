@@ -13,6 +13,7 @@ export default defineConfig({
   
   reporter: [
     ['html'],
+    ['line'],
     ['allure-playwright']
   ],
   
