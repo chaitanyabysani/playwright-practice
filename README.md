@@ -221,6 +221,35 @@ git push origin main
 - `pageobjects/ElementsPage.ts`
 - `pageobjects/PageObjectManager.ts`
 
+### ✅ Day 4 — February 25, 2026
+
+**🎯 Topics Covered:**
+- Page Objects — creating reusable page classes to encapsulate locators and actions
+- Page Object Model (POM) — structuring tests with page objects for better maintainability
+- Page Object Manager — centralizing page object instances for easy access in tests
+
+**🛠️ What I Did:**
+- Created `TextBoxPage.ts` in the `pageobjects/` folder
+- Updated `PageObjectManager.ts` to include `TextBoxPage` and added a getter method for it
+- Created a test script to fill the text box form using data from a JSON file and verify the output
+- Fixed the issue of elements not being visible by adding an explicit wait for the output card to be visible before making assertions
+- Updated assertions to check the visibility of the output card and the correctness of the output text
+- Updated the test to use the page object methods for filling the form and submitting it, instead of directly accessing the page object properties in the test
+- Updated the test to navigate to the Text Box page using the page object methods in the `beforeEach` hook, instead of directly accessing the page object properties in the test
+- Updated the test to use the `poManager` instance to access the page objects and their methods, instead of creating separate instances for each page object in the test
+- Updated the test to use the `poManager` instance to navigate through the pages and perform actions, instead of directly accessing the page object properties in the test
+- updated the tsconfig.json file to include "resolveJsonModule": true to allow importing JSON files directly into TypeScript tests
+- Created a JSON file with test data for the text box form and imported it into the test script to fill the form dynamically using the data from the JSON file, instead of hardcoding the test data in the test script
+
+
+**📂 Files Created:**
+- `pageobjects/HomePage.ts`
+- `pageobjects/ElementsPage.ts`
+- `pageobjects/PageObjectManager.ts`
+- `pageobjects/TextBoxPage.ts`
+- `tests/basic-scripts/text-box/ImportJSONintoPlaywrightTypeScripttests.spec.ts`
+- `utils/textBoxTestData.json`
+
 
 <!--
 ╔══════════════════════════════════════════════════════════════╗
