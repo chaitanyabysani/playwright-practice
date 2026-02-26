@@ -1,7 +1,6 @@
 import {test, expect} from "@playwright/test";
 import {POManager} from '../../../pageobjects/POManager';
 import testData from '../../../utils/textBoxTestData.json';
-import { TextBoxPage } from "../../../pageobjects/TextBoxPage";
 
 test.describe('Text Box Tests', () => {
 
