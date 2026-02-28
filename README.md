@@ -100,7 +100,7 @@ npx playwright show-report
 
 ---
 
-### ✅ Day 1 — February 21, 2026
+### ✅ Day 1 
 
 **🎯 Topics Covered:**
 - What is Playwright and why it is used in automation testing
@@ -140,7 +140,7 @@ git push origin main
 
 ---
 
-### ✅ Day 2 — February 22, 2026
+### ✅ Day 2 
 
 **🎯 Topics Covered:**
 - What is Allure Reports and why we use it in Playwright
@@ -205,7 +205,7 @@ git add README.md
 git commit -m "docs: add Day 2 Allure Reports practice scripts and interview prep"
 git push origin main
 ```
-### ✅ Day 3 — February 23, 2026
+### ✅ Day 3 
 
 **🎯 Topics Covered:**
 - Page Objects — creating reusable page classes to encapsulate locators and actions
@@ -221,7 +221,7 @@ git push origin main
 - `pageobjects/ElementsPage.ts`
 - `pageobjects/PageObjectManager.ts`
 
-### ✅ Day 4 — February 25, 2026
+### ✅ Day 4 
 
 **🎯 Topics Covered:**
 - Page Objects — creating reusable page classes to encapsulate locators and actions
@@ -247,7 +247,7 @@ git push origin main
 - `tests/basic-scripts/text-box/ImportJSONintoPlaywrightTypeScripttests.spec.ts`
 - `utils/textBoxTestData.json`
 
-### ✅ Day 5 — February 26, 2026
+### ✅ Day 5 
 
 **🎯 Topics Covered:**
 - claude.ai — what it is and how it can help in test automation
@@ -442,15 +442,62 @@ Since Claude Code has full context of your codebase, here are some useful prompt
 
 ---
 
-> Made with ❤️ using [Claude Code](https://claude.ai/code) by Anthropic
+### ✅ Day 6 
 
+**🎯 Topics Covered:**
+- Removed the allure-report and allure-results folders from git
+- Updated .gitignore to include allure-report and allure-results folders to prevent them from being tracked by git
+
+**🛠️ What I Did:**
+- Ran `git rm -r --cached allure-results/` and `git rm -r --cached allure-report/` to untrack the folders
+- Added `allure-results/` and `allure-report/` to the `.gitignore` file to prevent future tracking
+- Committed the changes with a message explaining the removal of allure reports from tracking and the update to .gitignore
+
+## 🙈 Gitignore Configuration
+
+The `allure-results/` and `allure-report/` folders are intentionally **excluded from version control** because:
+
+- They are auto-generated on every test run
+- They can be large in size
+- They contain environment-specific output
+
+### `.gitignore` entries
+
+Make sure your `.gitignore` file includes:
+
+```
+allure-results/
+allure-report/
+node_modules/
+playwright-report/
+test-results/
+```
+
+### Already committed Allure files? Remove them
+
+If Allure folders were previously committed to the repository, run the following commands to untrack them without deleting them locally:
+
+```bash
+git rm -r --cached allure-results/
+git rm -r --cached allure-report/
+```
+
+Then commit and push the changes:
+
+```bash
+git add .gitignore
+git commit -m "chore: remove allure reports from tracking and add to gitignore"
+git push
+```
+
+> ✅ After this, the folders will be ignored in all future commits while still existing on your local machine.
 
 <!--
 ╔══════════════════════════════════════════════════════════════╗
 ║         DAILY LOG TEMPLATE — Copy & paste for each day       ║
 ╚══════════════════════════════════════════════════════════════╝
 
-### ✅ Day X — DATE
+### ✅ Day X 
 
 **🎯 Topics Covered:**
 -

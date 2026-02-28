@@ -1,5 +1,0 @@
-
-      Test Name   : Invalid login
-      Status      : passed
-      Duration    : 2383 ms
-    
