@@ -442,16 +442,63 @@ Since Claude Code has full context of your codebase, here are some useful prompt
 
 ---
 
-### ✅ Day 6 
+### ✅ Day 6
 
 **🎯 Topics Covered:**
 - Removed the allure-report and allure-results folders from git
 - Updated .gitignore to include allure-report and allure-results folders to prevent them from being tracked by git
+- Data-Driven Testing (Parameterized Tests) in Playwright using `for...of` loop
+- Running the same test with multiple data sets from a JSON file
 
 **🛠️ What I Did:**
 - Ran `git rm -r --cached allure-results/` and `git rm -r --cached allure-report/` to untrack the folders
 - Added `allure-results/` and `allure-report/` to the `.gitignore` file to prevent future tracking
 - Committed the changes with a message explaining the removal of allure reports from tracking and the update to .gitignore
+- Added 3 new test data sets to `utils/textBoxTestData.json` (total 4 data sets now) — each with unique `fullName`, `email`, `currentAddress`, and `permanentAddress`
+- Created a new data-driven test file `tests/basic-scripts/text-box/DataDrivenTextBoxTests.spec.ts` using Playwright's `for...of` loop pattern
+- The `for...of` loop iterates over the entire `testData` array at module load time, registering a separate `test.describe` block for each data set
+- Each data set runs as an independent test — if one fails, the others still execute
+- Each test appears with the person's name in the title for easy identification in HTML and Allure reports
+- To add more test scenarios in the future, simply add new objects to the JSON array — no code changes needed
+
+**📂 Files Created / Modified:**
+- `utils/textBoxTestData.json` — **Modified**: expanded from 1 to 4 data sets (kept original at index 0 so existing tests are not affected)
+- `tests/basic-scripts/text-box/DataDrivenTextBoxTests.spec.ts` — **Created**: new data-driven test using `for...of` loop
+
+**💡 Key Learnings:**
+- Playwright does not have a built-in `test.each` like Jest — instead, use a `for...of` loop at module level to register parameterized tests
+- Each iteration of the loop creates a separate test in the report, with its own screenshots, video, and trace
+- Wrapping each iteration in `test.describe` groups the `beforeEach` hook and test together under a named section in the report
+- Keeping the original data at index 0 unchanged ensures backward compatibility with existing tests that use `testData[0]`
+- The `--grep` flag can be used to run a specific data set by name: `npx playwright test --grep "Alice Johnson"`
+
+**🧪 Data-Driven Test Pattern Used:**
+```typescript
+import testData from '../../../utils/textBoxTestData.json';
+
+for (const data of testData) {
+    test.describe(`Text Box Data-Driven Tests - ${data.fullName}`, () => {
+        test.beforeEach(async ({ page }) => {
+            // navigate to the page
+        });
+
+        test(`Fill and verify Text Box form for ${data.fullName}`, async () => {
+            // fill form with data.fullName, data.email, etc.
+            // assert output matches
+        });
+    });
+}
+```
+
+**🧪 Test Execution Results:**
+```
+Running 4 tests using 1 worker
+  ✅ Text Box Data-Driven Tests - chaitanya › Fill and verify Text Box form for chaitanya
+  ✅ Text Box Data-Driven Tests - Alice Johnson › Fill and verify Text Box form for Alice Johnson
+  ✅ Text Box Data-Driven Tests - Raj Patel › Fill and verify Text Box form for Raj Patel
+  ✅ Text Box Data-Driven Tests - Maria Garcia › Fill and verify Text Box form for Maria Garcia
+  4 passed
+```
 
 ## 🙈 Gitignore Configuration
 
