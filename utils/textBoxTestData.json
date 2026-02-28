@@ -4,6 +4,23 @@
         "email": "test@test.com",
         "currentAddress": "Flat No. 3B, Sai Residency, Plot No. 12, Old Alwal Road, Tirumalagiri, Secunderabad, Telangana 500010, India",
         "permanentAddress": "House No. 21, Green Meadows Apartments, Sector 14, Kharghar, Navi Mumbai, Maharashtra 410210, India"
+    },
+    {
+        "fullName": "Alice Johnson",
+        "email": "alice.johnson@example.com",
+        "currentAddress": "456 Elm Street, Apt 7, Springfield, IL 62704, USA",
+        "permanentAddress": "789 Oak Avenue, Suite 200, Chicago, IL 60601, USA"
+    },
+    {
+        "fullName": "Raj Patel",
+        "email": "raj.patel@domain.org",
+        "currentAddress": "B-12, Sunrise Complex, MG Road, Bengaluru, Karnataka 560001, India",
+        "permanentAddress": "A-45, Shanti Nagar, Pune, Maharashtra 411001, India"
+    },
+    {
+        "fullName": "Maria Garcia",
+        "email": "maria.garcia@mail.net",
+        "currentAddress": "Calle Gran Via 28, Piso 3, Madrid 28013, Spain",
+        "permanentAddress": "Avenida de la Constitucion 15, Sevilla 41001, Spain"
     }
-
 ]
