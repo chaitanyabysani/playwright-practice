@@ -442,62 +442,393 @@ Since Claude Code has full context of your codebase, here are some useful prompt
 
 ---
 
-### ✅ Day 6
+### ✅ Day 6 — Using Claude Code to Generate, Test, Commit & Raise a PR (End-to-End Workflow)
 
 **🎯 Topics Covered:**
-- Removed the allure-report and allure-results folders from git
-- Updated .gitignore to include allure-report and allure-results folders to prevent them from being tracked by git
-- Data-Driven Testing (Parameterized Tests) in Playwright using `for...of` loop
-- Running the same test with multiple data sets from a JSON file
+- Using **Claude Code** (AI assistant inside VS Code) to generate a complete Playwright test script from a plain English prompt
+- Data-Driven Testing (Parameterized Tests) — running the same test once for each data set in a JSON file
+- Full end-to-end workflow: **CLAUDE.md → Prompt → Plan → Script Generation → Test Execution → Git Commit → Push → Pull Request**
+- Removed allure-report and allure-results folders from git tracking and updated `.gitignore`
 
-**🛠️ What I Did:**
-- Ran `git rm -r --cached allure-results/` and `git rm -r --cached allure-report/` to untrack the folders
-- Added `allure-results/` and `allure-report/` to the `.gitignore` file to prevent future tracking
-- Committed the changes with a message explaining the removal of allure reports from tracking and the update to .gitignore
-- Added 3 new test data sets to `utils/textBoxTestData.json` (total 4 data sets now) — each with unique `fullName`, `email`, `currentAddress`, and `permanentAddress`
-- Created a new data-driven test file `tests/basic-scripts/text-box/DataDrivenTextBoxTests.spec.ts` using Playwright's `for...of` loop pattern
-- The `for...of` loop iterates over the entire `testData` array at module load time, registering a separate `test.describe` block for each data set
-- Each data set runs as an independent test — if one fails, the others still execute
-- Each test appears with the person's name in the title for easy identification in HTML and Allure reports
-- To add more test scenarios in the future, simply add new objects to the JSON array — no code changes needed
+> 💡 **Why this matters:** Instead of writing every line of code manually, you describe what you need in plain English, and Claude Code generates production-ready code that follows your project's existing patterns. This is the future of test automation.
 
-**📂 Files Created / Modified:**
-- `utils/textBoxTestData.json` — **Modified**: expanded from 1 to 4 data sets (kept original at index 0 so existing tests are not affected)
-- `tests/basic-scripts/text-box/DataDrivenTextBoxTests.spec.ts` — **Created**: new data-driven test using `for...of` loop
+---
 
-**💡 Key Learnings:**
-- Playwright does not have a built-in `test.each` like Jest — instead, use a `for...of` loop at module level to register parameterized tests
-- Each iteration of the loop creates a separate test in the report, with its own screenshots, video, and trace
-- Wrapping each iteration in `test.describe` groups the `beforeEach` hook and test together under a named section in the report
-- Keeping the original data at index 0 unchanged ensures backward compatibility with existing tests that use `testData[0]`
-- The `--grep` flag can be used to run a specific data set by name: `npx playwright test --grep "Alice Johnson"`
+#### 📘 Step 1: Giving Claude Code Access to the Project — The `CLAUDE.md` File
 
-**🧪 Data-Driven Test Pattern Used:**
+Before Claude Code can help you, it needs to **understand your project**. This is done through a special file called `CLAUDE.md` that lives in the root of your repository.
+
+**What is `CLAUDE.md`?**
+- It is a plain markdown file that acts as a **project instruction manual** for Claude Code
+- Claude Code **automatically reads this file** every time you start a conversation
+- It tells Claude Code: what commands to run, how the project is structured, what patterns to follow, and what conventions to use
+
+**On Day 5, we created `CLAUDE.md` with these key sections:**
+
+| Section | What It Tells Claude Code |
+|---------|--------------------------|
+| **Commands** | How to install dependencies (`npm install`), run tests (`npx playwright test`), run a specific file, show reports, etc. |
+| **Architecture** | This is a Playwright + TypeScript project targeting `demoqa.com` with `baseURL` set in `playwright.config.ts` |
+| **Page Object Model** | POManager is the single entry point — never import individual page classes directly. Locators are `readonly` fields, actions are `async` methods |
+| **Test Data** | JSON files live in `utils/` and are imported directly. Access data by index: `testData[0]` |
+| **Test Structure** | Where test files are located: `tests/allure-report-basics/`, `tests/basic-scripts/text-box/`, etc. |
+| **Reporters** | Three reporters are active: HTML, Line (terminal), and Allure |
+| **Configuration** | Chromium browser, headless mode, screenshots/video/trace all ON, 30s timeout |
+| **Allure Convention** | Always use `import * as allure from 'allure-js-commons'` — the old import is deprecated |
+| **CI/CD** | GitHub Actions runs on every push/PR to main |
+
+**Example from our `CLAUDE.md`:**
+```markdown
+### Page Object Model (POM)
+- `POManager` is the single entry point — instantiate it with a `page` object
+- Tests import only `POManager`, never individual page classes
+- Each page class holds locators as `readonly` fields, plus async action methods
+
+### Test Data
+- JSON test data lives in `utils/` and is imported directly into test files
+- Access data by index: `testData[0]`
+```
+
+> ✅ **Key Takeaway:** The better your `CLAUDE.md` is, the better Claude Code understands your project. It's like giving a new team member a complete onboarding document on their first day.
+
+---
+
+#### 📘 Step 2: What Prompt (Instruction) Was Given to Claude Code
+
+Once `CLAUDE.md` is in place, you simply **type a plain English message** to Claude Code in VS Code describing what you need.
+
+**The exact prompt I gave Claude Code:**
+
+> *"In the current project we have `ImportJSONintoPlaywrightTypeScripttests.spec.ts` file. In that we added a script like get the test data from JSON file and while executing the script pass the data to the script. Now we need one new script file that should work like — we have different sets of data in the JSON file. For each set of data the script should run. How many sets of data are there, that many times the script should run."*
+
+**What this means in simple words:**
+- We already have a test that reads data from a JSON file — but it only uses the **first data set** (`testData[0]`)
+- We want a **new test file** where the test runs **once for each data set** in the JSON array
+- If there are 4 data sets → the test runs 4 times. If there are 10 → it runs 10 times
+- This is called **Data-Driven Testing** or **Parameterized Testing**
+
+> ✅ **Key Takeaway:** You don't need to write code. You don't need to know the exact Playwright API. Just describe **what you want** in your own words, and Claude Code figures out how to implement it.
+
+---
+
+#### 📘 Step 3: How Claude Code Planned the Approach (Before Writing Any Code)
+
+Claude Code does **NOT** start writing code immediately. It first:
+
+1. **Explored the codebase** — read the existing test file, JSON data, all page objects (`POManager.ts`, `TextBoxPage.ts`, `HomePage.ts`, `ElementsPage.ts`), and `playwright.config.ts`
+2. **Created a plan** and showed it to me for approval:
+
+**Claude Code's Plan:**
+
+| Step | What Claude Code Proposed |
+|------|--------------------------|
+| 1 | Add 3 more data sets to `textBoxTestData.json` (keep the original at index 0 so existing tests don't break) |
+| 2 | Create a new file `DataDrivenTextBoxTests.spec.ts` using Playwright's `for...of` loop pattern |
+| 3 | Each data set will appear as a **separate test** in the HTML and Allure reports |
+| 4 | Follow the exact same POM pattern, import conventions, and assertion formats already used in the project |
+
+**Claude Code also identified:**
+- Playwright does not have `test.each` like Jest — so it proposed using a `for...of` loop at module level
+- The original test (`testData[0]`) must not be affected — backward compatibility
+- Each test should include the person's name in the title for easy identification in reports
+
+> ✅ **Key Takeaway:** Claude Code plans first, shows you the plan, and only proceeds **after you approve it**. You are always in control.
+
+---
+
+#### 📘 Step 4: How Claude Code Generated the Script
+
+After I approved the plan, Claude Code made two changes:
+
+**Change 1: Expanded the JSON test data file** (`utils/textBoxTestData.json`)
+
+Before (1 data set):
+```json
+[
+    {
+        "fullName": "chaitanya",
+        "email": "test@test.com",
+        "currentAddress": "Flat No. 3B, Sai Residency...",
+        "permanentAddress": "House No. 21, Green Meadows..."
+    }
+]
+```
+
+After (4 data sets — Claude Code added 3 new ones):
+```json
+[
+    {
+        "fullName": "chaitanya",
+        "email": "test@test.com",
+        "currentAddress": "Flat No. 3B, Sai Residency, Plot No. 12, Old Alwal Road, Tirumalagiri, Secunderabad, Telangana 500010, India",
+        "permanentAddress": "House No. 21, Green Meadows Apartments, Sector 14, Kharghar, Navi Mumbai, Maharashtra 410210, India"
+    },
+    {
+        "fullName": "Alice Johnson",
+        "email": "alice.johnson@example.com",
+        "currentAddress": "456 Elm Street, Apt 7, Springfield, IL 62704, USA",
+        "permanentAddress": "789 Oak Avenue, Suite 200, Chicago, IL 60601, USA"
+    },
+    {
+        "fullName": "Raj Patel",
+        "email": "raj.patel@domain.org",
+        "currentAddress": "B-12, Sunrise Complex, MG Road, Bengaluru, Karnataka 560001, India",
+        "permanentAddress": "A-45, Shanti Nagar, Pune, Maharashtra 411001, India"
+    },
+    {
+        "fullName": "Maria Garcia",
+        "email": "maria.garcia@mail.net",
+        "currentAddress": "Calle Gran Via 28, Piso 3, Madrid 28013, Spain",
+        "permanentAddress": "Avenida de la Constitucion 15, Sevilla 41001, Spain"
+    }
+]
+```
+
+> Notice: The original data at index 0 (`chaitanya`) is **unchanged** — so the existing test `ImportJSONintoPlaywrightTypeScripttests.spec.ts` still works perfectly.
+
+**Change 2: Created the new test file** (`tests/basic-scripts/text-box/DataDrivenTextBoxTests.spec.ts`)
+
 ```typescript
+import {test, expect} from "@playwright/test";
+import {POManager} from '../../../pageobjects/POManager';
 import testData from '../../../utils/textBoxTestData.json';
 
 for (const data of testData) {
+
     test.describe(`Text Box Data-Driven Tests - ${data.fullName}`, () => {
-        test.beforeEach(async ({ page }) => {
-            // navigate to the page
+
+        let poManager: POManager;
+
+        test.beforeEach(async ({page}) => {
+            poManager = new POManager(page);
+            await poManager.getHomePage().goToHomePage();
+            await poManager.getHomePage().navigateToElementsPage();
+            await poManager.getElementsPage().navigateToTextBox();
         });
 
         test(`Fill and verify Text Box form for ${data.fullName}`, async () => {
-            // fill form with data.fullName, data.email, etc.
-            // assert output matches
+            await poManager.getTextBoxPage().fillTextBoxForm(
+                data.fullName,
+                data.email,
+                data.currentAddress,
+                data.permanentAddress
+            );
+            await poManager.getTextBoxPage().submitForm();
+
+            await expect(poManager.getTextBoxPage().outputCard).toBeVisible();
+            await expect(poManager.getTextBoxPage().outputFullName).toHaveText(`Name:${data.fullName}`);
+            await expect(poManager.getTextBoxPage().outputEmail).toHaveText(`Email:${data.email}`);
+            await expect(poManager.getTextBoxPage().outputCurrentAddress).toHaveText(`Current Address :${data.currentAddress}`);
+            await expect(poManager.getTextBoxPage().outputPermanentAddress).toHaveText(`Permananet Address :${data.permanentAddress}`);
         });
+
     });
+
 }
 ```
 
-**🧪 Test Execution Results:**
+**How this script works (line by line for beginners):**
+
+| Line(s) | What It Does |
+|----------|-------------|
+| `import testData from '...textBoxTestData.json'` | Loads all 4 data sets from the JSON file into a variable called `testData` |
+| `for (const data of testData)` | Loops through each data set. If there are 4 objects in the JSON → this loop runs 4 times |
+| `test.describe(...)` | Creates a **test group** for each data set, with the person's name in the title |
+| `test.beforeEach(...)` | Before each test: creates a new POManager, navigates to Home → Elements → Text Box page |
+| `test(...)` | The actual test: fills the form using the current data set, clicks Submit, then checks the output |
+| `await expect(...).toHaveText(...)` | Verifies the output displayed on the page matches the data we entered |
+
+**Why `for...of` loop and not `test.each`?**
+- Playwright does **not** have a built-in `test.each` like Jest
+- The `for...of` loop runs at **module load time** (before any test starts)
+- Each iteration registers a **separate test** — so Playwright sees 4 independent tests, not 1 test running 4 times
+- Each test gets its own screenshots, video recording, and trace file
+
+> ✅ **Key Takeaway:** Claude Code followed the project's existing patterns automatically — POM imports, `beforeEach` navigation, assertion formats — all because it read `CLAUDE.md`.
+
+---
+
+#### 📘 Step 5: How Claude Code Ran and Verified the Tests
+
+Claude Code doesn't just generate code — it **tests its own work** before committing.
+
+**Test Run 1 — New data-driven test file (4 data sets = 4 tests):**
 ```
+npx playwright test tests/basic-scripts/text-box/DataDrivenTextBoxTests.spec.ts
+
 Running 4 tests using 1 worker
   ✅ Text Box Data-Driven Tests - chaitanya › Fill and verify Text Box form for chaitanya
   ✅ Text Box Data-Driven Tests - Alice Johnson › Fill and verify Text Box form for Alice Johnson
   ✅ Text Box Data-Driven Tests - Raj Patel › Fill and verify Text Box form for Raj Patel
   ✅ Text Box Data-Driven Tests - Maria Garcia › Fill and verify Text Box form for Maria Garcia
-  4 passed
+  4 passed (36.9s)
+```
+
+**Test Run 2 — Original test file (to confirm no regression):**
+```
+npx playwright test tests/basic-scripts/text-box/ImportJSONintoPlaywrightTypeScripttests.spec.ts
+
+Running 1 test using 1 worker
+  ✅ Text Box Tests › Fill Text Box Form and Verify Output
+  1 passed (11.1s)
+```
+
+> ✅ **Key Takeaway:** Claude Code runs the tests itself, verifies everything passes, and also checks that old tests are not broken. Only then does it move to committing.
+
+---
+
+#### 📘 Step 6: How Claude Code Committed to Git
+
+After all tests passed, I asked Claude Code: **"Please commit all of my changes so we can make a PR."**
+
+Claude Code then:
+
+1. **Ran `git status`** — to see what files were changed
+2. **Ran `git diff`** — to review the exact changes
+3. **Ran `git log`** — to check the project's existing commit message style
+4. **Staged only the specific files** (not `git add .` which could include unwanted files):
+   ```bash
+   git add utils/textBoxTestData.json tests/basic-scripts/text-box/DataDrivenTextBoxTests.spec.ts
+   ```
+5. **Created a commit with a meaningful message:**
+   ```
+   feat: add data-driven Text Box tests with multiple test data sets
+
+   Add a new test spec that iterates over all JSON data sets using a for...of
+   loop, running the Text Box form fill-and-verify test once per data set.
+   Expand test data from 1 to 4 entries to exercise the parameterized tests.
+
+   Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+   ```
+6. **Ran `git status` again** — to confirm the working tree is clean
+
+> Notice the `Co-Authored-By` tag — this tells GitHub that the code was written with help from Claude Code. It appears in the commit history for transparency.
+
+> ✅ **Key Takeaway:** Claude Code follows git best practices — it stages specific files, writes descriptive commit messages using the project's naming convention (`feat:`, `docs:`, etc.), and verifies the commit was successful.
+
+---
+
+#### 📘 Step 7: How Claude Code Pushed and Raised a PR
+
+After committing, I told Claude Code to push and create a Pull Request.
+
+**Step 7a: Push to GitHub**
+```bash
+git push origin claude/funny-mclaren
+```
+Claude Code pushed the branch to the remote repository on GitHub.
+
+**Step 7b: Create a Pull Request**
+
+Claude Code generated the PR with a structured format:
+
+**PR Title:** `feat: add data-driven Text Box tests`
+
+**PR Body:**
+```markdown
+## Summary
+- Added a new data-driven test file (DataDrivenTextBoxTests.spec.ts) that uses
+  Playwright's for...of loop pattern to run the Text Box form test once per data set
+- Expanded textBoxTestData.json from 1 to 4 test data sets
+- Updated README.md Day 6 with documentation
+
+## How it works
+Each data set registers as a separate test in HTML and Allure reports.
+Adding more scenarios only requires appending objects to the JSON array.
+
+## Test plan
+- [x] Ran DataDrivenTextBoxTests.spec.ts — 4/4 passed
+- [x] Ran ImportJSONintoPlaywrightTypeScripttests.spec.ts — 1/1 passed (no regression)
+- [ ] Verify tests pass in CI (GitHub Actions)
+```
+
+> ✅ **Key Takeaway:** Claude Code creates professional PRs with a summary, explanation, and test plan — just like a real developer would do in a team environment.
+
+---
+
+#### 📘 Complete Workflow Diagram
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    CLAUDE CODE WORKFLOW                          │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  1. CLAUDE.md          You write project instructions once      │
+│       ↓                Claude Code reads it automatically       │
+│                                                                 │
+│  2. Plain English      "I need a script that runs for           │
+│     Prompt              each data set in the JSON file"         │
+│       ↓                                                         │
+│                                                                 │
+│  3. Explore &          Claude Code reads your existing           │
+│     Plan               code and creates a plan                  │
+│       ↓                                                         │
+│                                                                 │
+│  4. Your Approval      You review the plan and say "Yes"        │
+│       ↓                                                         │
+│                                                                 │
+│  5. Code Generation    Claude Code writes the test file         │
+│       ↓                and expands the JSON data                │
+│                                                                 │
+│  6. Test Execution     Claude Code runs the tests itself        │
+│       ↓                4/4 passed + no regression               │
+│                                                                 │
+│  7. Git Commit         Claude Code stages, commits with         │
+│       ↓                meaningful message + Co-Authored-By      │
+│                                                                 │
+│  8. Push & PR          Claude Code pushes branch and            │
+│                        creates a Pull Request on GitHub         │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+#### 💡 Key Takeaways for Beginners
+
+| # | Takeaway |
+|---|----------|
+| 1 | **`CLAUDE.md` is the foundation** — it tells Claude Code how your project works, what patterns to follow, and what conventions to use. Write it once, and Claude Code uses it every time. |
+| 2 | **You describe, Claude Code builds** — you don't write code. You explain what you need in plain English, and Claude Code generates production-ready code. |
+| 3 | **Claude Code plans before coding** — it reads your existing code, creates a plan, and waits for your approval before making any changes. You are always in control. |
+| 4 | **Claude Code tests its own work** — it runs the tests, checks for regressions, and only commits after everything passes. |
+| 5 | **Claude Code follows your project's style** — because of `CLAUDE.md`, it uses the same POM pattern, same import style, same assertion format, and same commit message convention. |
+| 6 | **The entire cycle happens inside VS Code** — prompt → code → test → commit → push → PR — all without leaving your editor. |
+| 7 | **To add more data sets in the future** — just add new objects to the JSON array. The test will automatically pick them up. No code changes needed. |
+
+---
+
+#### 📂 Files Created / Modified on Day 6
+
+| File | Action | Description |
+|------|--------|-------------|
+| `utils/textBoxTestData.json` | Modified | Expanded from 1 to 4 data sets (original kept at index 0) |
+| `tests/basic-scripts/text-box/DataDrivenTextBoxTests.spec.ts` | Created | New data-driven test using `for...of` loop — runs once per data set |
+| `README.md` | Modified | Added Day 6 documentation with complete Claude Code workflow |
+| `.gitignore` | Modified | Added `allure-results/` and `allure-report/` to prevent tracking |
+
+---
+
+#### 📌 Git Commands Claude Code Used on Day 6
+
+```bash
+# Stage specific files (not git add .)
+git add utils/textBoxTestData.json tests/basic-scripts/text-box/DataDrivenTextBoxTests.spec.ts
+
+# Commit with descriptive message
+git commit -m "feat: add data-driven Text Box tests with multiple test data sets
+
+Add a new test spec that iterates over all JSON data sets using a for...of
+loop, running the Text Box form fill-and-verify test once per data set.
+Expand test data from 1 to 4 entries to exercise the parameterized tests.
+
+Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>"
+
+# Push the branch to GitHub
+git push origin claude/funny-mclaren
+
+# Create a Pull Request (requires gh CLI)
+gh pr create --title "feat: add data-driven Text Box tests" --body "..."
 ```
 
 ## 🙈 Gitignore Configuration
