@@ -870,6 +870,22 @@ git push
 
 > ✅ After this, the folders will be ignored in all future commits while still existing on your local machine.
 
+### ✅ Day 7
+
+**🎯 Topics Covered:**
+- Fixtures
+
+**🛠️ What I Did:**
+- Added verifyoutput method in TextBoxPage.ts to verify all output fields in one method instead of separate assertions in the test file. This makes the test cleaner and more maintainable. The method takes the expected values as parameters and performs all assertions inside it.
+- updated the test script to use the new verifyoutput method, passing the expected values from the JSON data directly to it. This reduces code duplication and keeps the test focused on the high-level flow rather than individual assertions.
+- created a fixture in the test file to load the JSON test data and provide it to the tests. This allows for better organization of test data and makes it easier to manage and reuse across multiple tests. The fixture can be set up to run before all tests or before each test, depending on your needs.
+- updated the test to use the fixture data instead of importing the JSON file directly in the test. This abstracts away the data loading logic and keeps the test file cleaner.
+- updated the README.md to document the use of fixtures in the project, explaining how they work, how to create them, and how they improve test organization and maintainability.
+
+**📂 Files Created:**
+- 'tests/basic-scripts/text-box/CustomFixtureTextBoxTests.spec.ts'
+- 'fixtures/textBoxTestDataFixture.ts'
+
 <!--
 ╔══════════════════════════════════════════════════════════════╗
 ║         DAILY LOG TEMPLATE — Copy & paste for each day       ║

@@ -21,7 +21,7 @@ export default defineConfig({
     
     baseURL: 'https://demoqa.com',
     browserName: 'chromium',
-    headless: true,
+    headless: false,
     screenshot: 'on',
     video: 'on',
     trace: 'on',

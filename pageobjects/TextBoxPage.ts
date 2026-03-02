@@ -42,4 +42,12 @@ export class TextBoxPage {
             await this.submitButton.click();
         }
 
+        async verifyOutput(fullName: string, email: string, currentAddress: string, permanentAddress: string) {
+            await expect(this.outputCard).toBeVisible();
+            await expect(this.outputFullName).toHaveText(`Name:${fullName}`);
+            await expect(this.outputEmail).toHaveText(`Email:${email}`);
+            await expect(this.outputCurrentAddress).toHaveText(`Current Address :${currentAddress}`);
+            await expect(this.outputPermanentAddress).toHaveText(`Permananet Address :${permanentAddress}`);
+        }
+
 }

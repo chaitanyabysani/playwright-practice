@@ -1,3 +1,7 @@
+/* In this script, we are implementing data-driven tests for the Text Box form using Playwright. We have 
+a json file and in that only one set of data is present. We import that data and use it to fill out the form and 
+verify the output. */
+
 import {test, expect} from "@playwright/test";
 import {POManager} from '../../../pageobjects/POManager';
 import testData from '../../../utils/textBoxTestData.json';
@@ -16,11 +20,7 @@ test.describe('Text Box Tests', () => {
         const {fullName, email, currentAddress, permanentAddress} = testData[0];
         await poManager.getTextBoxPage().fillTextBoxForm(fullName, email, currentAddress, permanentAddress);
         await poManager.getTextBoxPage().submitForm();
-        await expect(poManager.getTextBoxPage().outputCard).toBeVisible();
-        await expect(poManager.getTextBoxPage().outputFullName).toHaveText(`Name:${fullName}`);
-        await expect(poManager.getTextBoxPage().outputEmail).toHaveText(`Email:${email}`);
-        await expect(poManager.getTextBoxPage().outputCurrentAddress).toHaveText(`Current Address :${currentAddress}`);
-        await expect(poManager.getTextBoxPage().outputPermanentAddress).toHaveText(`Permananet Address :${permanentAddress}`);
+        await poManager.getTextBoxPage().verifyOutput(fullName, email, currentAddress, permanentAddress);
     });
 
 });
