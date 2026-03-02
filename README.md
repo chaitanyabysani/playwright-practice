@@ -874,6 +874,7 @@ git push
 
 **🎯 Topics Covered:**
 - Fixtures
+- Radio Button functionalities
 
 **🛠️ What I Did:**
 - Added verifyoutput method in TextBoxPage.ts to verify all output fields in one method instead of separate assertions in the test file. This makes the test cleaner and more maintainable. The method takes the expected values as parameters and performs all assertions inside it.
@@ -881,10 +882,13 @@ git push
 - created a fixture in the test file to load the JSON test data and provide it to the tests. This allows for better organization of test data and makes it easier to manage and reuse across multiple tests. The fixture can be set up to run before all tests or before each test, depending on your needs.
 - updated the test to use the fixture data instead of importing the JSON file directly in the test. This abstracts away the data loading logic and keeps the test file cleaner.
 - updated the README.md to document the use of fixtures in the project, explaining how they work, how to create them, and how they improve test organization and maintainability.
+- added a new test case to verify the functionality of radio buttons on the Elements page. This includes selecting different radio button options and verifying that the correct output is displayed based on the selection. This test helps ensure that the radio button functionality is working as expected and that user interactions are properly handled.
 
 **📂 Files Created:**
-- 'tests/basic-scripts/text-box/CustomFixtureTextBoxTests.spec.ts'
-- 'fixtures/textBoxTestDataFixture.ts'
+- `tests/basic-scripts/text-box/CustomFixtureTextBoxTests.spec.ts`
+- `fixtures/textBoxTestDataFixture.ts`
+- `tests/basic-scripts/radio-button/RadioButtonTests.spec.ts`
+- `pageobjects/RadioButtonPage.ts`
 
 <!--
 ╔══════════════════════════════════════════════════════════════╗
