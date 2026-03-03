@@ -25,6 +25,7 @@ npx playwright test
 | Day 3–5 | POM + Claude Code setup | [→ Wiki](../../wiki/Daily-Log-Day-3-to-5) |
 | Day 6 | Data-Driven Testing + Claude Code E2E | [→ Wiki](../../wiki/Daily-Log-Day-6) |
 | Day 7 | Fixtures + Radio Buttons | [→ Wiki](../../wiki/Daily-Log-Day-7) |
+| Day 8 | Notes on Constructor topic | [→ Wiki](../../wiki/TypeScript-Constructors-—-Complete-Guide) |
 
 ---
 
